@@ -43,7 +43,7 @@ exports.searchByName = async (req, res) => {
     const phoneNumbers = await Promise.all(
       users.map(async (user) => {
         const contacts = await Contact.findAll({
-          attributes: ["phoneNumber", "isSpam", "id"],
+          attributes: ["phoneNumber", "isSpam", "id", "reportBy"],
           where: {
             phoneNumber: user?.phoneNumber, // Filter contacts by phoneNumber
           },
@@ -74,7 +74,7 @@ exports.searchByPhoneNumber = async (req, res) => {
       where: {
         phoneNumber: { [Op.iLike]: `%${phoneNumber}%` },
       },
-      attributes: ["isSpam", "phoneNumber", "id"],
+      attributes: ["isSpam", "phoneNumber", "id", "reportBy"],
     });
     const phoneNumbers = await Promise.all(
       contactsDetails.map(async (contact) => {
