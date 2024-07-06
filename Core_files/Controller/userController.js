@@ -35,6 +35,9 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { phoneNumber, password } = req.body;
 
+  if (!phoneNumber || !password) {
+    return res.status(400).json({ error: "Please enter all fields" });
+  }
   try {
     const user = await User.findOne({ where: { phoneNumber } });
     if (!user) return res.status(400).json({ error: "User not found" });
