@@ -1,22 +1,25 @@
-const { Model, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../../config/database");
 
-class Contact extends Model {}
-Contact.init(
-  {
-    name: {
-      type: DataTypes.STRING,
-    },
-    phoneNumber: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    isSpam: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
+const Contact = sequelize.define("Contact", {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
   },
-  { sequelize, modelName: "contact_db" }
-);
+  phoneNumber: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  isSpam: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  reportBy: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+});
 
 module.exports = Contact;
